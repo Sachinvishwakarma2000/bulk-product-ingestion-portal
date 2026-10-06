@@ -1,0 +1,18 @@
+﻿sku,name,price,stock,category
+SKU-1001,Wireless Mouse Pro,899,100,Accessories
+SKU-1002,Mechanical Keyboard,2599,40,Accessories
+SKU-2001,Noise-Cancelling Headphones,"1,199.00",25,Audio
+SKU-2001,Noise-Cancelling Headphones,1299,25,Audio
+SKU-2002,Desk Lamp,₹3499,15,Office
+SKU-2003,Standing Desk,12.9.9,10,Office
+SKU-2004,Budget Cable,0,500,Accessories
+SKU-2005,Gold Plated Cable,99999999,5,Accessories
+SKU-2006,Ergonomic Chair,8999,-5,Furniture
+SKU-2007,Sticky Notes,49,3.5,Stationery
+SKU-2008,Whiteboard Marker,99,,Stationery
+,Orphan Product,199,20,Misc
+  SKU-2009  ,  Trailing Space Widget  ,299,30,Accessories
+SKU-2010,Café Crème Mug,349,40,
+SKU-2011,Naïve Notebook,159,60,Stationery
+SKU-2012,Too Few Columns,199
+SKU-2013,日本語キーボード,4999,12,Electronics

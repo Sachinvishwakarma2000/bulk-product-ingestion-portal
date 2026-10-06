@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Full-Stack Walk-In Assignment — React / Node / Python</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDF0F3;
+  --card:#F7F9FA;
+  --ink:#16202B;
+  --ink-soft:#54677A;
+  --rule:#C5D0D9;
+  --rule-soft:#DCE3E9;
+  --key:#8C2F39;
+  --key-bg:#F6EBEC;
+  --good:#1D6B5F;
+  --good-bg:#E8F1EF;
+  --code-bg:#E4E9ED;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#111820;
+    --card:#18212B;
+    --ink:#DDE5EC;
+    --ink-soft:#93A5B5;
+    --rule:#2C3A47;
+    --rule-soft:#232E39;
+    --key:#D98C94;
+    --key-bg:#241A1C;
+    --good:#67BCAB;
+    --good-bg:#14231F;
+    --code-bg:#0C1218;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111820;
+  --card:#18212B;
+  --ink:#DDE5EC;
+  --ink-soft:#93A5B5;
+  --rule:#2C3A47;
+  --rule-soft:#232E39;
+  --key:#D98C94;
+  --key-bg:#241A1C;
+  --good:#67BCAB;
+  --good-bg:#14231F;
+  --code-bg:#0C1218;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--serif);
+  font-size:1.0625rem;
+  line-height:1.62;
+  font-optical-sizing:auto;
+}
+.wrap{max-width:53rem;margin:0 auto;padding:2.5rem 1.5rem 6rem}
+p{margin:0 0 1rem;max-width:40em}
+a{color:inherit}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:2px solid var(--ink);padding-bottom:1.5rem;margin-bottom:2rem}
+.kicker{font-family:var(--sans);font-size:.8125rem;color:var(--ink-soft);letter-spacing:.01em;margin:0 0 .75rem}
+h1{
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(2rem,5.5vw,3.1rem);
+  line-height:1.08;letter-spacing:-.02em;margin:0 0 .6rem;max-width:18em;
+}
+.standfirst{font-size:1.15rem;color:var(--ink-soft);max-width:38em;margin:0}
+
+/* ---------- time spine ---------- */
+.spine{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+  margin:2.25rem 0 2.75rem;
+}
+.phase-col{
+  display:flex;flex-direction:column;gap:.35rem;
+  padding:.85rem .95rem;background:var(--card);
+  border:1px solid var(--rule);border-top:3px solid var(--ink);border-radius:4px;
+}
+.phase-chip{
+  font-family:var(--sans);font-size:.72rem;font-weight:600;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);
+}
+.phase-col b{font-family:var(--sans);font-weight:600;font-size:.9rem;color:var(--ink);line-height:1.25}
+.phase-desc{font-family:var(--sans);font-size:.8rem;color:var(--ink-soft);line-height:1.45}
+@media(max-width:640px){.spine{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.spine{grid-template-columns:1fr}}
+
+/* ---------- sections ---------- */
+section{margin:0 0 3.25rem}
+h2{
+  font-family:var(--serif);font-weight:500;font-size:1.85rem;line-height:1.2;
+  letter-spacing:-.015em;margin:0 0 .4rem;padding-top:1.5rem;border-top:1px solid var(--rule);
+}
+h2 .clock{
+  font-family:var(--sans);font-size:.75rem;font-weight:600;color:var(--ink-soft);
+  display:block;margin-bottom:.45rem;
+}
+h3{font-family:var(--sans);font-weight:600;font-size:1.0625rem;margin:1.9rem 0 .6rem;letter-spacing:-.005em}
+h4{font-family:var(--sans);font-weight:600;font-size:.9375rem;margin:1.4rem 0 .45rem;color:var(--ink-soft)}
+
+ul,ol{max-width:40em;padding-left:1.2rem;margin:0 0 1rem}
+li{margin-bottom:.4rem}
+li::marker{color:var(--ink-soft)}
+strong{font-weight:600}
+
+/* ---------- callouts ---------- */
+.note{
+  border-left:3px solid var(--rule);background:var(--card);
+  padding:.9rem 1.1rem;margin:1.4rem 0;max-width:42em;
+}
+.note p:last-child{margin-bottom:0}
+.note.good{border-left-color:var(--good);background:var(--good-bg)}
+
+details.key{
+  border:1px solid var(--key);border-left-width:4px;background:var(--key-bg);
+  margin:1.4rem 0;padding:0;
+}
+details.key>summary{
+  font-family:var(--sans);font-size:.875rem;font-weight:600;color:var(--key);
+  padding:.7rem 1rem;cursor:pointer;list-style:none;
+}
+details.key>summary::-webkit-details-marker{display:none}
+details.key>summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
+details.key[open]>summary::before{content:"▾ "}
+details.key>summary:focus-visible{outline:2px solid var(--key);outline-offset:-2px}
+.key-body{padding:0 1rem 1rem;font-size:.9375rem}
+.key-body ul{margin-bottom:.75rem}
+.key-body p:last-child,.key-body ul:last-child{margin-bottom:0}
+
+/* ---------- code ---------- */
+.codewrap{overflow-x:auto;background:var(--code-bg);border:1px solid var(--rule-soft);margin:1.2rem 0}
+pre{margin:0;padding:1rem 1.1rem;font-family:var(--mono);font-size:.8125rem;line-height:1.6}
+code{font-family:var(--mono);font-size:.875em;background:var(--code-bg);padding:.1em .35em}
+pre code{background:none;padding:0;font-size:1em}
+.filename{
+  font-family:var(--mono);font-size:.75rem;color:var(--ink-soft);
+  padding:.45rem 1.1rem;border-bottom:1px solid var(--rule-soft);background:var(--card);
+}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto;margin:1.3rem 0}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:.875rem;min-width:33rem}
+th,td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+thead th{border-bottom:1.5px solid var(--rule);font-weight:600;font-size:.8125rem;color:var(--ink-soft)}
+tbody tr:last-child td{border-bottom:1.5px solid var(--rule)}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tfoot td{font-weight:600;padding-top:.7rem}
+
+/* ---------- flags grid ---------- */
+.flags{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1.5rem;margin:1.4rem 0}
+.flags h4{margin-top:0}
+.flags ul{font-size:.9375rem}
+
+.handout{border:1px solid var(--rule);background:var(--card);padding:1.4rem 1.5rem;margin:1.4rem 0}
+.handout h3:first-child{margin-top:0}
+
+footer{border-top:1px solid var(--rule);padding-top:1.25rem;margin-top:3rem;font-family:var(--sans);font-size:.8125rem;color:var(--ink-soft)}
+
+@media print{
+  body{background:#fff;color:#000;font-size:10.5pt}
+  .wrap{max-width:none;padding:0}
+  details.key{break-inside:avoid}
+  details.key>summary::before{content:""}
+  details:not([open])>*:not(summary){display:revert}
+  section{break-inside:auto}
+  h2{break-after:avoid}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="kicker">Walk-in drive · Full-stack engineer · 2–3 years · React, Node, Python</p>
+  <h1>Your two-hour assignment</h1>
+  <p class="standfirst">You may use ChatGPT, Claude, Copilot or anything else — we expect you to. Four parts. Watch the clock yourself; getting stuck on one part and never reaching the others is itself a choice we can see.</p>
+</header>
+
+<section class="spine" aria-label="Time budget">
+  <div class="phase-col">
+    <span class="phase-chip">A · 20 min</span>
+    <b>Review a pull request</b>
+    <span class="phase-desc">Find what's wrong in code that runs fine.</span>
+  </div>
+  <div class="phase-col">
+    <span class="phase-chip">B · 55 min</span>
+    <b>Build a feature</b>
+    <span class="phase-desc">A bulk product import, front to back.</span>
+  </div>
+  <div class="phase-col">
+    <span class="phase-chip">C · 25 min</span>
+    <b>Redesign it for scale</b>
+    <span class="phase-desc">Prose and a sketch, no code.</span>
+  </div>
+  <div class="phase-col">
+    <span class="phase-chip">D · 15 min</span>
+    <b>Would you merge this?</b>
+    <span class="phase-desc">Critique an AI-written module.</span>
+  </div>
+</section>
+
+<section>
+  <h2>Ground rules</h2>
+  <ul>
+    <li><strong>Use any AI tool you like.</strong> Paste your conversation into <code>PROMPTS.md</code> as you go — <strong>raw and unedited</strong>, messy is expected (typos, dead ends, rejected answers and all). Don't tidy it up; we may ask you to walk through any part of it. We read <em>how you steer it</em>, not whether you used it.</li>
+    <li><strong>Nothing has to be fully working.</strong> A half-built feature with a clear note on what remains scores higher than a complete one that ignored the hard case.</li>
+    <li><strong>Write down assumptions as you make them,</strong> in <code>ANSWERS.md</code>. An assumption you recorded is a decision; one you didn't is a bug.</li>
+    <li><strong>Watch the clock.</strong> The time budget above is a guide. Spend it where it earns the most.</li>
+    <li><strong>Where to work:</strong> Part A → review <code>/review</code>. Part B → build in <code>/starter</code>. Part C → prose in <code>ANSWERS.md</code>. Part D → review <code>/critique</code>. All written work goes in <code>ANSWERS.md</code>.</li>
+  </ul>
+  <div class="note">
+    <p>If something in a brief seems under-specified, that is not a mistake to flag and wait on — decide, write down what you decided and why, and keep moving.</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="clock">Part A · 20 minutes · 20 marks</span>Review a pull request</h2>
+  <p>A teammate has raised this PR against your order-management service. It runs, and the happy path works. Leave review comments in <code>ANSWERS.md</code> under "Part A — review". For each one give the file and line, what goes wrong, and a severity: blocker, should-fix, or nit. Do not rewrite the code — we want the comments.</p>
+  <p class="note"><strong>You don't need to be a JavaScript or React specialist.</strong> This PR is a Node/Express backend with a React frontend, but a good code review carries across languages. Read it and review it as you would any service in your own stack.</p>
+  <div class="codewrap">
+    <div class="filename">server/routes/orders.js</div>
+<pre><code>const express = require(&#x27;express&#x27;);
+const router = express.Router();
+const db = require(&#x27;../db&#x27;);
+const paymentGateway = require(&#x27;../payments&#x27;);
+
+const JWT_SECRET = &#x27;prod-secret-2023&#x27;;
+
+router.get(&#x27;/orders&#x27;, async (req, res) =&gt; {
+  const orders = await db.query(
+    &#x27;SELECT * FROM orders WHERE tenant_id = &#x27; + req.query.tenantId
+  );
+  for (const o of orders) {
+    o.customer = await db.query(`SELECT * FROM customers WHERE id = ${o.customer_id}`);
+    o.items    = await db.query(`SELECT * FROM order_items WHERE order_id = ${o.id}`);
+  }
+  res.json(orders);
+});
+
+router.post(&#x27;/orders/:id/refund&#x27;, async (req, res) =&gt; {
+  const order = await db.query(`SELECT * FROM orders WHERE id = ${req.params.id}`);
+
+  if (order.status === &#x27;refunded&#x27;) {
+    return res.status(400).json({ error: &#x27;already refunded&#x27; });
+  }
+
+  const amount = parseFloat(req.body.amount);
+  await paymentGateway.refund(order.payment_id, amount);
+  await db.query(`UPDATE orders SET status = &#x27;refunded&#x27; WHERE id = ${req.params.id}`);
+
+  res.json({ ok: true });
+});
+
+module.exports = router;</code></pre>
+  </div>
+  <div class="codewrap">
+    <div class="filename">web/src/OrderList.jsx</div>
+<pre><code>import { useState, useEffect } from &#x27;react&#x27;;
+import Row from &#x27;./Row&#x27;;
+
+export default function OrderList({ tenantId }) {
+  const [orders, setOrders] = useState([]);
+  const [query, setQuery]   = useState(&#x27;&#x27;);
+
+  useEffect(() =&gt; {
+    fetch(`/api/orders?tenantId=${tenantId}&amp;q=${query}`)
+      .then(r =&gt; r.json())
+      .then(setOrders);
+  }, [query]);
+
+  const total = orders.reduce((sum, o) =&gt; sum + o.amount, 0);
+
+  return (
+    &lt;div&gt;
+      &lt;input onChange={e =&gt; setQuery(e.target.value)} /&gt;
+      {orders.map(o =&gt; &lt;Row key={Math.random()} order={o} /&gt;)}
+      &lt;p&gt;Total: {total}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+  </div>
+</section>
+
+<section>
+  <h2><span class="clock">Part B · 55 minutes · 35 marks</span>Build the bulk product import</h2>
+  <div class="handout">
+    <h3>Bulk product import</h3>
+    <p>Our operations team uploads a CSV of products to update the catalogue. Build it.</p>
+    <ul>
+      <li>An endpoint that accepts a CSV upload. Node/Express or Python/FastAPI, your choice.</li>
+      <li>Columns: <code>sku</code>, <code>name</code>, <code>price</code>, <code>stock</code>, <code>category</code>.</li>
+      <li>Validate the rows. Invalid ones must not block the valid ones.</li>
+      <li>A small React screen to upload the file and show the outcome.</li>
+      <li>Persistence can be SQLite, an in-memory array, or a JSON file. We are not marking your schema migrations.</li>
+    </ul>
+    <p>Sample files are in <code>starter/fixtures</code>. Record every assumption you make in <code>ANSWERS.md</code> under "Part B — assumptions".</p>
+  </div>
+</section>
+
+<section>
+  <h2><span class="clock">Part C · 25 minutes · 25 marks</span>Redesign it for 100× load</h2>
+  <p>The import you just built is now used by 500 tenants. Files reach 500 MB and half a million rows. Operations needs a progress indicator and needs to know which rows failed and why. Imports must not let one large tenant starve everyone else.</p>
+  <p>In <code>ANSWERS.md</code>, in under a page: sketch the components and how a file moves through them; name the three decisions you are least sure about and what you traded away in each; say what you would keep from your Part B code and what you would throw out; and describe the first thing that breaks at 10× this load. Prose and ASCII, or a photographed whiteboard sketch committed to the repo. No code.</p>
+</section>
+
+<section>
+  <h2><span class="clock">Part D · 15 minutes · 20 marks</span>Would you merge this?</h2>
+  <p>A junior on your team asked ChatGPT for a currency conversion helper and opened this PR. It has tests, and they pass. Would you approve it? In <code>ANSWERS.md</code> under "Part D — review", annotate what you would change and say which of your objections would block the merge versus which you would raise and let through.</p>
+  <div class="codewrap">
+    <div class="filename">app/pricing/fx.py</div>
+<pre><code>import httpx
+
+CACHE = {}
+
+
+async def get_exchange_rate(base: str, quote: str) -&gt; float:
+    key = f&quot;{base}/{quote}&quot;
+    if key in CACHE:
+        return CACHE[key]
+
+    async with httpx.AsyncClient() as client:
+        response = await client.get(f&quot;https://api.rates.example/v1/{base}/{quote}&quot;)
+        rate = response.json()[&quot;rate&quot;]
+
+    CACHE[key] = rate
+    return rate
+
+
+async def convert_all(orders: list[dict]) -&gt; list[dict]:
+    results = []
+    for order in orders:
+        rate = await get_exchange_rate(order[&quot;currency&quot;], &quot;USD&quot;)
+        results.append({**order, &quot;usd&quot;: round(order[&quot;amount&quot;] * rate, 2)})
+    return results
+
+
+def total_usd(orders: list[dict]) -&gt; float:
+    return sum(order[&quot;usd&quot;] for order in orders)</code></pre>
+  </div>
+</section>
+
+<section>
+  <h2>How it is scored</h2>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>What it measures</th><th>Where it comes from</th><th class="num">Marks</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Reads code critically and grades severity</td><td>Part A</td><td class="num">20</td></tr>
+        <tr><td>Surfaces ambiguity instead of guessing</td><td>Part B assumptions</td><td class="num">12</td></tr>
+        <tr><td>Writes correct, separable code</td><td>Part B implementation</td><td class="num">23</td></tr>
+        <tr><td>Designs for scale and names the trade-offs</td><td>Part C</td><td class="num">25</td></tr>
+        <tr><td>Audits AI output rather than trusting it</td><td>Part D + prompt log</td><td class="num">20</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="2">Total</td><td class="num">100</td></tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <p>This is the candidate copy of the assignment. Marking guidance is held separately by the evaluation panel.</p>
+</footer>
+
+</div>
+</body>
+</html>
